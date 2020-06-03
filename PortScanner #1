@@ -1,0 +1,26 @@
+import os 
+import sys
+import socket
+import nmap
+
+nm=nmap.PortScanner()
+nm.scan(127.0.0.1,'1-1024')
+
+for host in nm.all_hosts():
+  print('---')
+  print('Host: {0} ({1})'.format(host,nm[host].hostname()))
+  print('state : {0}'.format(nm[host].state()))
+
+  for proto in nm[host].all_protocols():
+    print('---')
+    print('protocol : {0}'.format(proto))
+
+    lport = list(nm[host][proto].keys())
+    lport.sort()
+    for port in lport:
+      print('port : {0}\tstate : {1}'.format(port,nm[host][proto][port]))
+
+print('-----')
+
+
+import nmap에 예외로 에러가 발생하면 nmap 미설치인게 세팅 다시하고 실행하면 정상구동 될듯 
